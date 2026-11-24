@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1080, initial-scale=1.0" />
+  <title>Stock Photo Editorial Overlay · 1080x1350</title>
+  <style>
+    @font-face {
+      font-family: 'Inter Display';
+      src: url('file:///home/ubuntu/chatwoot/public/vite-dev/assets/InterDisplay-Light-DB1R7qf0.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Inter Display';
+      src: url('file:///home/ubuntu/chatwoot/public/vite-dev/assets/InterDisplay-Regular-C0mmbI_t.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Inter Display';
+      src: url('file:///home/ubuntu/chatwoot/public/vite-dev/assets/InterDisplay-Medium-BRBaQVhl.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Inter Display';
+      src: url('file:///home/ubuntu/chatwoot/public/vite-dev/assets/InterDisplay-Bold-CXJyJlfA.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Inter Display';
+      src: url('file:///home/ubuntu/chatwoot/public/vite-dev/assets/InterDisplay-ExtraBold-DsWMgBJM.woff2') format('woff2');
+      font-weight: 800;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('file:///home/ubuntu/skills/design/canvas-design/canvas-fonts/JetBrainsMono-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-style: normal;
+    }
+
+    html, body {
+      width: 1080px;
+      height: 1350px;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Inter Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .slide {
+      position: relative;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      background: #E2E8F0;
+    }
+
+    /* Layer 1: Full-bleed stock photo at the bottom */
+    .stock-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      z-index: 1;
+    }
+
+    /* Layer 2: Subtle directional gradient scrim for guaranteed legibility */
+    .scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(
+        180deg,
+        rgba(15, 23, 42, 0.08) 0%,
+        rgba(15, 23, 42, 0.04) 45%,
+        rgba(15, 23, 42, 0.34) 100%
+      );
+    }
+
+    .slide.pos-top .scrim {
+      background: linear-gradient(
+        180deg,
+        rgba(15, 23, 42, 0.34) 0%,
+        rgba(15, 23, 42, 0.04) 45%,
+        rgba(15, 23, 42, 0.42) 100%
+      );
+    }
+
+    /* Layer 3: Foreground UI + Frosted Editorial Card */
+    .overlay-layout {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      height: 100%;
+      padding: 46px 54px 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .top-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      text-shadow: 0 2px 10px rgba(15, 23, 42, 0.45);
+    }
+
+    .top-counter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      color: #FFFFFF;
+      text-shadow: 0 2px 10px rgba(15, 23, 42, 0.45);
+    }
+
+    .slide.pos-top .glass-card {
+      margin-top: 22px;
+      margin-bottom: auto;
+    }
+
+    .slide.pos-bottom .glass-card {
+      margin-top: auto;
+      margin-bottom: 24px;
+    }
+
+    /* Frosted Glass Card (light-glass default vs editorial-scrim like @gbmplus_) */
+    .glass-card {
+      border-radius: 26px;
+      padding: 42px 44px;
+      backdrop-filter: blur(22px) saturate(140%);
+      -webkit-backdrop-filter: blur(22px) saturate(140%);
+      box-shadow: 0 20px 44px rgba(15, 23, 42, 0.18);
+    }
+
+    /* Light Glass (White Mode default) */
+    .slide.theme-light-glass .glass-card {
+      background: rgba(255, 255, 255, 0.84);
+      border: 1.5px solid rgba(255, 255, 255, 0.92);
+      color: #0F172A;
+    }
+
+    .slide.theme-light-glass .glass-kicker {
+      color: #1A73E8;
+    }
+
+    .slide.theme-light-glass .glass-desc {
+      color: #334155;
+    }
+
+    /* Editorial Scrim Glass (like @gbmplus_ for very bright photos) */
+    .slide.theme-editorial-scrim .glass-card {
+      background: rgba(15, 23, 42, 0.46);
+      border: 1.5px solid rgba(255, 255, 255, 0.24);
+      color: #FFFFFF;
+    }
+
+    .slide.theme-editorial-scrim .glass-kicker {
+      color: #93C5FD;
+    }
+
+    .slide.theme-editorial-scrim .glass-desc {
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .glass-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14.5px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .glass-title {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1.8px;
+      margin-bottom: 18px;
+    }
+
+    .glass-desc {
+      font-size: 25px;
+      font-weight: 400;
+      line-height: 1.38;
+    }
+
+    .bottom-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+    }
+
+    .domain-mark {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #FFFFFF;
+      text-shadow: 0 2px 12px rgba(15, 23, 42, 0.55);
+    }
+
+    .swipe-hint {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #FFFFFF;
+      text-shadow: 0 2px 12px rgba(15, 23, 42, 0.55);
+    }
+  </style>
+</head>
+<body>
+  <section class="slide theme-light-glass pos-bottom" id="slide">
+    <img class="stock-bg" id="stockImg" src="" alt="Stock background" />
+    <div class="scrim"></div>
+
+    <div class="overlay-layout">
+      <div class="top-bar">
+        <span class="top-brand" id="topBrand">ESTUDIO ACTIVO · GEMINI</span>
+        <span class="top-counter" id="topCounter">01 / 04</span>
+      </div>
+
+      <div class="glass-card">
+        <div class="glass-kicker" id="cardKicker">MÉTODO PRÁCTICO</div>
+        <h1 class="glass-title" id="cardTitle">Estudia en la mitad de tiempo con tu propio PDF</h1>
+        <p class="glass-desc" id="cardDesc">
+          Convierte las guías de tu profesor en tarjetas didácticas y simuladores de examen para detectar qué temas dominas hoy mismo.
+        </p>
+      </div>
+
+      <div class="bottom-meta">
+        <span class="domain-mark" id="domainMark">danielcruz.mx/flashcards</span>
+        <span class="swipe-hint" id="swipeHint">DESLIZA -></span>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      const p = new URLSearchParams(window.location.search);
+      const slide = document.getElementById('slide');
+      if (p.get('theme') === 'editorial-scrim') {
+        slide.classList.remove('theme-light-glass');
+        slide.classList.add('theme-editorial-scrim');
+      }
+      if (p.get('pos') === 'top') {
+        slide.classList.remove('pos-bottom');
+        slide.classList.add('pos-top');
+      }
+      if (p.get('img')) document.getElementById('stockImg').src = p.get('img');
+      if (p.get('brand')) document.getElementById('topBrand').textContent = p.get('brand');
+      if (p.get('counter')) document.getElementById('topCounter').textContent = p.get('counter');
+      if (p.get('kicker')) document.getElementById('cardKicker').textContent = p.get('kicker');
+      if (p.get('title')) document.getElementById('cardTitle').textContent = p.get('title');
+      if (p.get('desc')) document.getElementById('cardDesc').textContent = p.get('desc');
+      if (p.get('domain')) document.getElementById('domainMark').textContent = p.get('domain');
+      if (p.get('swipe')) document.getElementById('swipeHint').textContent = p.get('swipe');
+    })();
+  </script>
+</body>
+</html>

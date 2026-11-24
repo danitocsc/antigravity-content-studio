@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>3 Muestras Mobile-First Motion Graphics (1080x1920 Safe Margins)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-style: normal !important;
+  }
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+    background: #000;
+  }
+  .bg-frame {
+    position: absolute;
+    inset: 0;
+    width: 1080px;
+    height: 1920px;
+    object-fit: cover;
+    z-index: 1;
+  }
+  /*
+   * STRICT 1080x1920 SAFE ZONE:
+   * left: 96px, right: 184px (width = 800px), bottom: 480px (y <= 1440px), top >= 1030px (below chin)
+   */
+  .sample {
+    display: none;
+    position: absolute;
+    left: 96px;
+    right: 184px;
+    bottom: 480px;
+    z-index: 10;
+  }
+  .sample.active {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* =====================================================================
+     MUESTRA A: SWISS PULSE · GIANT SINGLE-FOCUS (huashu-art-motion "Una cosa por pantalla" + 84-108px)
+     ===================================================================== */
+  .ma-caption {
+    background: #FFFFFF;
+    border: 4px solid #0F172A;
+    box-shadow: 8px 8px 0px #0F172A;
+    padding: 14px 22px;
+    font-size: 38px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -1.3px;
+    line-height: 1.08;
+  }
+  .ma-hl {
+    background: #FEF08A;
+    padding: 1px 10px;
+    border-bottom: 5px solid #EAB308;
+  }
+  .ma-card {
+    background: #FFFFFF;
+    border: 4.5px solid #0F172A;
+    box-shadow: 10px 10px 0px #0F172A;
+  }
+  .ma-topbar {
+    background: #F8FAFC;
+    border-bottom: 3.5px solid #0F172A;
+    padding: 11px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: 1.5px;
+  }
+  .ma-topbar span:last-child {
+    color: #1A73E8;
+  }
+  .ma-body {
+    padding: 20px 26px 24px;
+  }
+  .ma-main-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .ma-model {
+    font-size: 78px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -3.2px;
+    line-height: 0.96;
+  }
+  .ma-score {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 88px;
+    font-weight: 800;
+    color: #1A73E8;
+    letter-spacing: -4px;
+    line-height: 0.95;
+  }
+  .ma-score small {
+    font-size: 40px;
+    color: #64748B;
+    letter-spacing: -1px;
+  }
+  .ma-desc {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1E293B;
+    letter-spacing: -0.8px;
+    margin-bottom: 16px;
+  }
+  .ma-desc strong {
+    color: #137333;
+    border: 3.5px solid #EA4335;
+    padding: 1px 10px;
+  }
+  .ma-bar-track {
+    height: 28px;
+    background: #F1F5F9;
+    border: 3.5px solid #0F172A;
+    width: 100%;
+  }
+  .ma-bar-fill {
+    height: 100%;
+    width: 100%;
+    background: #1A73E8;
+  }
+
+  /* =====================================================================
+     MUESTRA B: TIKTOK KINETIC POP + HIGHLIGHT SLAM (HyperFrames Captions 60-88px + Motion.Lab)
+     ===================================================================== */
+  .mb-kinetic-box {
+    background: #FFFFFF;
+    border: 4.5px solid #0F172A;
+    box-shadow: 10px 10px 0px #0F172A;
+    padding: 18px 24px;
+  }
+  .mb-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 19px;
+    font-weight: 800;
+    color: #1A73E8;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .mb-giant-words {
+    font-size: 56px;
+    font-weight: 900;
+    color: #0F172A;
+    line-height: 1.04;
+    letter-spacing: -2.2px;
+  }
+  .mb-sketch {
+    display: inline-block;
+    border: 4.5px solid #EA4335;
+    background: #FEF08A;
+    padding: 0px 12px;
+  }
+  .mb-split-card {
+    display: grid;
+    grid-template-columns: 245px 1fr;
+    background: #FFFFFF;
+    border: 4.5px solid #0F172A;
+    box-shadow: 10px 10px 0px #0F172A;
+  }
+  .mb-left-score {
+    background: #EFF6FF;
+    border-right: 4px solid #0F172A;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .mb-big-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 76px;
+    font-weight: 800;
+    color: #1A73E8;
+    letter-spacing: -3.5px;
+    line-height: 1;
+  }
+  .mb-big-unit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 19px;
+    font-weight: 800;
+    color: #0F172A;
+    margin-top: 4px;
+  }
+  .mb-right-info {
+    padding: 18px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .mb-right-title {
+    font-size: 54px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .mb-right-sub {
+    font-size: 28px;
+    font-weight: 800;
+    color: #137333;
+    line-height: 1.15;
+  }
+
+  /* =====================================================================
+     MUESTRA C: KEYNOTE STEP-FOCUS (huashu-art-motion t2/t3: Protagonista gigante + 2 niveles compactos)
+     ===================================================================== */
+  .mc-card {
+    background: #FFFFFF;
+    border: 4.5px solid #0F172A;
+    box-shadow: 10px 10px 0px #0F172A;
+  }
+  .mc-header {
+    background: #F8FAFC;
+    border-bottom: 3.5px solid #0F172A;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 19px;
+    font-weight: 800;
+    color: #0F172A;
+  }
+  /* Active Expanded Hero Row */
+  .mc-active {
+    background: #EFF6FF;
+    border-bottom: 3.5px solid #0F172A;
+    padding: 20px 24px 22px;
+  }
+  .mc-active-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .mc-active-name {
+    font-size: 66px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -2.6px;
+    line-height: 0.98;
+  }
+  .mc-active-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 74px;
+    font-weight: 800;
+    color: #1A73E8;
+    letter-spacing: -3.2px;
+    line-height: 0.98;
+  }
+  .mc-active-desc {
+    font-size: 30px;
+    font-weight: 800;
+    color: #0F172A;
+    margin-bottom: 14px;
+  }
+  .mc-active-bar {
+    height: 24px;
+    background: #FFFFFF;
+    border: 3px solid #0F172A;
+  }
+  .mc-active-fill {
+    height: 100%;
+    width: 100%;
+    background: #1A73E8;
+  }
+  /* Compact Inactive Strip */
+  .mc-inactive-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #F8FAFC;
+  }
+  .mc-mini {
+    padding: 14px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-right: 2.5px solid #CBD5E1;
+  }
+  .mc-mini:last-child {
+    border-right: none;
+  }
+  .mc-mini-name {
+    font-size: 28px;
+    font-weight: 900;
+    color: #64748B;
+    letter-spacing: -0.8px;
+  }
+  .mc-mini-score {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 800;
+    color: #64748B;
+  }
+</style>
+</head>
+<body>
+  <img class="bg-frame" src="/tmp/flow_research/bg_clip2.jpg">
+
+  <!-- MUESTRA A -->
+  <div id="m1" class="sample">
+    <div class="ma-caption">
+      Día a día: usa <span class="ma-hl">Hydrogen</span>
+    </div>
+    <div class="ma-card">
+      <div class="ma-topbar">
+        <span>MUESTRA A · SWISS PULSE GIGANTE</span>
+        <span>NIVEL 01 / 03</span>
+      </div>
+      <div class="ma-body">
+        <div class="ma-main-row">
+          <div class="ma-model">Hydrogen</div>
+          <div class="ma-score">5.0<small>/5</small></div>
+        </div>
+        <div class="ma-desc"><strong>GRATIS</strong> · El más veloz para tareas diarias</div>
+        <div class="ma-bar-track"><div class="ma-bar-fill"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MUESTRA B -->
+  <div id="m2" class="sample">
+    <div class="mb-kinetic-box">
+      <div class="mb-kicker">MUESTRA B · TIKTOK KINETIC SLAM</div>
+      <div class="mb-giant-words">
+        Usa <span class="mb-sketch">Hydrogen</span> en tu día a día
+      </div>
+    </div>
+    <div class="mb-split-card">
+      <div class="mb-left-score">
+        <div class="mb-big-num">5/5</div>
+        <div class="mb-big-unit">VELOCIDAD</div>
+      </div>
+      <div class="mb-right-info">
+        <div class="mb-right-title">Hydrogen</div>
+        <div class="mb-right-sub">GRATIS · Respuestas al instante</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MUESTRA C -->
+  <div id="m3" class="sample">
+    <div class="mc-card">
+      <div class="mc-header">
+        <span>MUESTRA C · KEYNOTE FOCO ACTIVO</span>
+        <span style="color:#1A73E8;">01 / 03 MODELOS</span>
+      </div>
+      <div class="mc-active">
+        <div class="mc-active-top">
+          <div class="mc-active-name">Hydrogen</div>
+          <div class="mc-active-num">5.0/5</div>
+        </div>
+        <div class="mc-active-desc">GRATIS · El más veloz para tu día a día</div>
+        <div class="mc-active-bar"><div class="mc-active-fill"></div></div>
+      </div>
+      <div class="mc-inactive-strip">
+        <div class="mc-mini">
+          <span class="mc-mini-name">02 Neon</span>
+          <span class="mc-mini-score">3.5/5</span>
+        </div>
+        <div class="mc-mini">
+          <span class="mc-mini-name">03 Carbon</span>
+          <span class="mc-mini-score">2.0/5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const m = new URLSearchParams(window.location.search).get('m') || '1';
+    document.getElementById('m' + m).classList.add('active');
+  </script>
+</body>
+</html>

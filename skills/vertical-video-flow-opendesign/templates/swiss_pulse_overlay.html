@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Swiss Pulse 1080x1920 Safe-Margin Overlay</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-style: normal !important;
+  }
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /*
+   * STRICT SAFE ZONE (from media_1795491161457_012fcbfa.png):
+   * - Total canvas: 1080 x 1920 px
+   * - Top dead zone: 0..160 px
+   * - Creator face & chin: 160..935 px (never cover!)
+   * - Left safe margin: 96 px (inside 120px crop margin)
+   * - Right action bar dead zone: 184 px (clears the 1080px-tall right bar)
+   * - Bottom dead zone: 480 px (y <= 1440 px, so bottom >= 488 px)
+   */
+  .safe-stage {
+    position: absolute;
+    left: 96px;
+    right: 184px; /* width = 800px */
+    bottom: 480px; /* y bottom = 1440px, exact 480px bottom safe margin */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Dynamic Synchronized Subtitle Bar */
+  .subtitle-bar {
+    background: #FFFFFF;
+    border: 3px solid #0F172A;
+    box-shadow: 5px 5px 0px #0F172A;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform-origin: left bottom;
+  }
+  .sub-indicator {
+    width: 8px;
+    height: 20px;
+    background: #1A73E8;
+    flex-shrink: 0;
+  }
+  .sub-text {
+    font-size: 21px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+  }
+  .sub-hl {
+    background: #FEF08A;
+    padding: 1px 6px;
+    border-bottom: 3px solid #EAB308;
+  }
+
+  /* Main Swiss Pulse Card (Josef Müller-Brockmann Grid) */
+  .swiss-card {
+    background: #FFFFFF;
+    border: 3.5px solid #0F172A;
+    box-shadow: 7px 7px 0px #0F172A;
+    overflow: hidden;
+  }
+  .swiss-topbar {
+    background: #F8FAFC;
+    border-bottom: 2.5px solid #0F172A;
+    padding: 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .swiss-topbar-left {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+  }
+  .swiss-topbar-right {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 800;
+    color: #1A73E8;
+    letter-spacing: 1px;
+  }
+
+  .swiss-body {
+    padding: 13px 20px 14px;
+  }
+  .swiss-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 800;
+    color: #1A73E8;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .swiss-headline {
+    font-size: 29px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -1.1px;
+    line-height: 1.06;
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+    border-bottom: 2.5px solid #0F172A;
+  }
+  .sketch-wrap {
+    display: inline-block;
+    position: relative;
+    padding: 0 7px;
+  }
+  .sketch-rect {
+    position: absolute;
+    inset: -2px 0;
+    border: 3px solid #EA4335;
+    transform-origin: left center;
+  }
+
+  /* 12-Column Swiss Rows */
+  .swiss-rows {
+    display: flex;
+    flex-direction: column;
+  }
+  .swiss-row {
+    display: grid;
+    grid-template-columns: 155px 1fr 104px;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 0;
+    border-bottom: 1.5px solid #CBD5E1;
+  }
+  .swiss-row:last-child {
+    border-bottom: none;
+    padding-bottom: 2px;
+  }
+  .row-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -0.6px;
+    line-height: 1.05;
+  }
+  .row-tier {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    color: #475569;
+    margin-top: 2px;
+    letter-spacing: 0.7px;
+  }
+  .row-mid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .row-desc {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1E293B;
+    line-height: 1.15;
+  }
+  .row-track {
+    height: 13px;
+    background: #F1F5F9;
+    border: 2px solid #0F172A;
+    width: 100%;
+    overflow: hidden;
+  }
+  .row-fill {
+    height: 100%;
+    width: 0%;
+  }
+  .row-metric {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 31px;
+    font-weight: 800;
+    color: #0F172A;
+    text-align: right;
+    letter-spacing: -1.6px;
+  }
+  .row-metric small {
+    font-size: 16px;
+    color: #64748B;
+    letter-spacing: -0.5px;
+  }
+</style>
+</head>
+<body>
+  <div id="stage" class="safe-stage"></div>
+</body>
+</html>

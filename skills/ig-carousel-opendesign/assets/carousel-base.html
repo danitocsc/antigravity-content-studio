@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1080, initial-scale=1.0" />
+  <title>Carrusel 4 Láminas: Estudia Más Rápido con Google Gemini · danielcruz.mx/flashcards</title>
+  <style>
+    @font-face {
+      font-family: 'Inter Display';
+      src: url('file:///home/ubuntu/chatwoot/public/vite-dev/assets/InterDisplay-Light-DB1R7qf0.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Inter Display';
+      src: url('file:///home/ubuntu/chatwoot/public/vite-dev/assets/InterDisplay-Regular-C0mmbI_t.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Inter Display';
+      src: url('file:///home/ubuntu/chatwoot/public/vite-dev/assets/InterDisplay-Medium-BRBaQVhl.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Inter Display';
+      src: url('file:///home/ubuntu/chatwoot/public/vite-dev/assets/InterDisplay-Bold-CXJyJlfA.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Inter Display';
+      src: url('file:///home/ubuntu/chatwoot/public/vite-dev/assets/InterDisplay-ExtraBold-DsWMgBJM.woff2') format('woff2');
+      font-weight: 800;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Inter Display';
+      src: url('file:///home/ubuntu/chatwoot/public/vite-dev/assets/InterDisplay-Black-DM1fLmGj.woff2') format('woff2');
+      font-weight: 900;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('file:///home/ubuntu/skills/design/canvas-design/canvas-fonts/JetBrainsMono-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    :root {
+      --bg: #F8FAFC;
+      --paper: #FFFFFF;
+      --ink: #0F172A;
+      --ink-secondary: #334155;
+      --muted: #64748B;
+      --border: #CBD5E1;
+      --border-soft: #E2E8F0;
+      --blue: #1A73E8;
+      --blue-tint: #EFF6FF;
+      --blue-border: #BFDBFE;
+      --green: #137333;
+      --green-tint: #ECFDF5;
+      --green-border: #A7F3D0;
+      --amber: #D97706;
+      --amber-tint: #FEFCE8;
+      --amber-border: #FDE68A;
+      --red: #D93025;
+      --red-tint: #FEF2F2;
+      --red-border: #FECACA;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-style: normal;
+    }
+
+    html, body {
+      width: 1080px;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      font-family: 'Inter Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.single-mode {
+      height: 1350px;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: relative;
+      width: 1080px;
+      height: 1350px;
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+      background-size: 45px 45px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .top-spectrum {
+      width: 100%;
+      height: 10px;
+      background: linear-gradient(90deg, #4285F4 0%, #EA4335 33%, #FBBC05 66%, #34A853 100%);
+      flex-shrink: 0;
+    }
+
+    .canvas {
+      flex: 1;
+      padding: 36px 56px 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Micro Header */
+    .micro-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .mh-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mh-left img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+
+    .mh-series {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+
+    .mh-stage {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      color: var(--blue);
+      text-transform: uppercase;
+    }
+
+    /* Hero Block */
+    .hero-block {
+      margin-top: 8px;
+      margin-bottom: 10px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .hero-top-sticker {
+      position: absolute;
+      right: 6px;
+      top: -8px;
+      width: 210px;
+      height: 225px;
+      object-fit: contain;
+      filter: drop-shadow(0 14px 24px rgba(15, 23, 42, 0.16));
+      pointer-events: none;
+    }
+
+    .kicker-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .kicker-line::before {
+      content: "";
+      width: 24px;
+      height: 3px;
+      background: currentColor;
+      display: inline-block;
+    }
+
+    .h-display {
+      font-size: 78px;
+      font-weight: 900;
+      line-height: 0.96;
+      letter-spacing: -3.1px;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .h-display .hl-blue { color: var(--blue); }
+    .h-display .hl-green { color: var(--green); }
+
+    .h-lead {
+      font-size: 26.5px;
+      font-weight: 400;
+      line-height: 1.34;
+      color: var(--ink-secondary);
+      max-width: 755px;
+    }
+
+    /* Anchor Row */
+    .anchor-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      flex-shrink: 0;
+    }
+
+    .anchor-text {
+      font-size: 23.5px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+    }
+
+    .anchor-text .blue { color: var(--blue); }
+    .anchor-text .green { color: var(--green); }
+
+    .swipe-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0.8px;
+    }
+
+    /* Footer with 4-segment progress bar */
+    .micro-footer {
+      padding-top: 18px;
+      border-top: 1.5px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .mf-author-name {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 0.4px;
+      color: var(--ink);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .mf-author-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .mf-progress-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .mf-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 1.2px;
+    }
+
+    .mf-bars {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mf-bar {
+      width: 48px;
+      height: 7px;
+      border-radius: 4px;
+      background: var(--border);
+    }
+
+    .mf-bar.done { background: var(--ink); }
+    .mf-bar.active { background: var(--blue); }
+
+    .diecut {
+      object-fit: contain;
+      filter: drop-shadow(0 12px 20px rgba(15, 23, 42, 0.16));
+    }
+
+    /* ================= SLIDE 1 ================= */
+    .s1-code-stage {
+      background: var(--paper);
+      border: 2.5px solid var(--ink);
+      border-radius: 26px;
+      padding: 26px 34px 30px;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.05);
+    }
+
+    .code-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      border-bottom: 1.5px solid var(--border-soft);
+    }
+
+    .win-dots {
+      display: flex;
+      gap: 10px;
+    }
+
+    .win-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+
+    .wd-r { background: #EA4335; }
+    .wd-y { background: #FBBC05; }
+    .wd-g { background: #34A853; }
+
+    .code-filename {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .code-lines {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1.65;
+      color: var(--ink);
+    }
+
+    .code-prompt { color: var(--muted); margin-right: 12px; }
+    .code-false { color: var(--red); }
+    .code-true { color: var(--green); }
+    .code-fn { color: var(--blue); }
+
+    .s1-benefit-strip {
+      background: var(--blue-tint);
+      border: 2px solid var(--blue-border);
+      border-radius: 24px;
+      padding: 22px 28px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .s1-benefit-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .s1-benefit-title {
+      font-size: 25px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 5px;
+      letter-spacing: -0.4px;
+    }
+
+    .s1-benefit-sub {
+      font-size: 20px;
+      color: var(--ink-secondary);
+      line-height: 1.3;
+    }
+
+    .s1-stickers-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .s1-stickers-row img {
+      width: 106px;
+      height: 106px;
+    }
+
+    /* ================= SLIDE 2: FLASHCARDS ================= */
+    .s2-cards-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .fc-box {
+      border-radius: 26px;
+      padding: 28px 34px;
+      display: grid;
+      grid-template-columns: 1fr 132px;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .fc-front {
+      background: var(--blue-tint);
+      border: 2.5px solid var(--blue);
+    }
+
+    .fc-back {
+      background: var(--paper);
+      border: 2.5px solid var(--ink);
+    }
+
+    .fc-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15.5px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .fc-back .fc-meta { color: var(--green); }
+
+    .fc-question {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.8px;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .fc-answer {
+      font-size: 29px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .fc-hint {
+      font-size: 21px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      line-height: 1.3;
+    }
+
+    .fc-box img {
+      width: 128px;
+      height: 128px;
+    }
+
+    /* ================= SLIDE 3: SIMULADOR DE EXAMEN ================= */
+    .quiz-card {
+      background: var(--paper);
+      border: 2.5px solid var(--ink);
+      border-radius: 26px;
+      padding: 28px 34px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.05);
+    }
+
+    .quiz-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 1.4px;
+    }
+
+    .quiz-progress-track {
+      width: 100%;
+      height: 10px;
+      background: var(--border-soft);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .quiz-progress-fill {
+      width: 35%;
+      height: 100%;
+      background: var(--green);
+      border-radius: 5px;
+    }
+
+    .quiz-q {
+      font-size: 33px;
+      font-weight: 800;
+      line-height: 1.16;
+      letter-spacing: -0.8px;
+      color: var(--ink);
+      padding-right: 112px;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .quiz-opt {
+      border-radius: 18px;
+      padding: 17px 22px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 23.5px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .quiz-opt-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .quiz-opt-letter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .quiz-opt.correct {
+      background: var(--green-tint);
+      border: 2px solid var(--green);
+    }
+
+    .quiz-opt.correct .quiz-opt-letter,
+    .quiz-opt-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 1.2px;
+    }
+
+    .quiz-explain {
+      padding-top: 12px;
+      border-top: 1.5px solid var(--border-soft);
+      font-size: 21px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      line-height: 1.32;
+    }
+
+    .quiz-floating-sticker {
+      position: absolute;
+      top: 52px;
+      right: 26px;
+      width: 114px;
+      height: 114px;
+    }
+
+    /* ================= SLIDE 4: DEDICATED WEB PAGE CTA ================= */
+    .s4-web-card {
+      background: var(--blue-tint);
+      border: 2.5px solid var(--blue);
+      border-radius: 26px;
+      padding: 30px 34px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+    }
+
+    .s4-url-top {
+      display: grid;
+      grid-template-columns: 1fr 140px;
+      gap: 18px;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid var(--blue-border);
+    }
+
+    .s4-url-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .s4-url-domain {
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 0.98;
+      letter-spacing: -2px;
+      color: var(--ink);
+    }
+
+    .s4-url-domain .slash {
+      color: var(--blue);
+    }
+
+    .s4-url-top img {
+      width: 136px;
+      height: 136px;
+    }
+
+    .s4-features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .s4-feat-row {
+      background: var(--paper);
+      border: 1.5px solid var(--blue-border);
+      border-radius: 16px;
+      padding: 14px 20px;
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .s4-feat-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .s4-feat-text {
+      font-size: 21.5px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.28;
+    }
+
+    .s4-question-card {
+      background: var(--green-tint);
+      border: 2.5px solid var(--green);
+      border-radius: 24px;
+      padding: 24px 30px;
+      display: grid;
+      grid-template-columns: 1fr 118px;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .s4-q-title {
+      font-size: 31px;
+      font-weight: 900;
+      line-height: 1.14;
+      letter-spacing: -0.8px;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .s4-q-sub {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--green);
+    }
+
+    .s4-question-card img {
+      width: 114px;
+      height: 114px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== SLIDE 1 (01 / 04) ==================== -->
+  <section class="slide" id="slide-1" data-od-id="c4-slide-01">
+    <div class="top-spectrum"></div>
+    <div class="canvas">
+      <header class="micro-header">
+        <div class="mh-left">
+          <img src="file://~/.agents/skills/ig-carousel-opendesign/assets/google-g.png" alt="Google" />
+          <span class="mh-series">ESTUDIO ACTIVO CON IA</span>
+        </div>
+        <span class="mh-stage">01 / EL PROBLEMA</span>
+      </header>
+
+      <div class="hero-block">
+        <img class="hero-top-sticker" style="width: 210px; height: 240px; top: -10px; right: 10px;" src="file://~/.agents/skills/ig-carousel-opendesign/assets/diecut/lightbulb.png" alt="Foco 3D" />
+        <div class="kicker-line">ESTUDIA MÁS RÁPIDO Y MEJOR</div>
+        <h1 class="h-display">
+          Estudia en la<br />
+          <span class="hl-blue">mitad de tiempo.</span><br />
+          Comprende el doble.
+        </h1>
+        <p class="h-lead">
+          Releer <strong>5 veces</strong> tu PDF te da falsa seguridad hasta que te quedas en blanco en el examen. La clave no es leer más horas, es entrenar tu memoria.
+        </p>
+      </div>
+
+      <div class="s1-code-stage">
+        <div class="code-topbar">
+          <div class="win-dots">
+            <span class="win-dot wd-r"></span>
+            <span class="win-dot wd-y"></span>
+            <span class="win-dot wd-g"></span>
+          </div>
+          <span class="code-filename">metodo_estudio.py</span>
+        </div>
+        <div class="code-lines">
+          <div><span class="code-prompt">&gt;&gt;&gt;</span>releer_sin_practicar = <span class="code-false">False</span></div>
+          <div><span class="code-prompt">&gt;&gt;&gt;</span>entrenar_con_tu_pdf = <span class="code-true">True</span></div>
+          <div><span class="code-prompt">&gt;&gt;&gt;</span><span class="code-fn">aprobar_sin_desvelarse()</span></div>
+        </div>
+      </div>
+
+      <div class="s1-benefit-strip">
+        <div>
+          <div class="s1-benefit-kicker">Cómo te beneficia hoy mismo</div>
+          <div class="s1-benefit-title">Detectas en 10 minutos qué temas sí dominas</div>
+          <div class="s1-benefit-sub">Transformas los apuntes de tu profesor en práctica activa con Google Gemini.</div>
+        </div>
+        <div class="s1-stickers-row">
+          <img class="diecut" src="file://~/.agents/skills/ig-carousel-opendesign/assets/diecut/clock_gold.png" alt="Reloj 3D" />
+          <img class="diecut" src="file://~/.agents/skills/ig-carousel-opendesign/assets/diecut/books_red.png" alt="Libros 3D" />
+        </div>
+      </div>
+
+      <div class="anchor-row">
+        <span class="anchor-text">Desliza para ver las 2 herramientas que cambian cómo estudias.</span>
+        <span class="swipe-cue">DESLIZA →</span>
+      </div>
+
+      <footer class="micro-footer">
+        <div>
+          <div class="mf-author-name">DANIEL CRUZ · danielcruz.mx/flashcards</div>
+          <div class="mf-author-role">ESTUDIANTES EMBAJADORES DE GOOGLE</div>
+        </div>
+        <div class="mf-progress-wrap">
+          <div class="mf-count">01 / 04</div>
+          <div class="mf-bars">
+            <span class="mf-bar active"></span>
+            <span class="mf-bar"></span>
+            <span class="mf-bar"></span>
+            <span class="mf-bar"></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 2 (02 / 04) ==================== -->
+  <section class="slide" id="slide-2" data-od-id="c4-slide-02">
+    <div class="top-spectrum"></div>
+    <div class="canvas">
+      <header class="micro-header">
+        <div class="mh-left">
+          <img src="file://~/.agents/skills/ig-carousel-opendesign/assets/google-g.png" alt="Google" />
+          <span class="mh-series">ESTUDIO ACTIVO CON IA</span>
+        </div>
+        <span class="mh-stage">02 / FLASHCARDS</span>
+      </header>
+
+      <div class="hero-block">
+        <img class="hero-top-sticker" style="width: 215px; height: 225px; top: -10px; right: 4px;" src="file://~/.agents/skills/ig-carousel-opendesign/assets/diecut/rocket.png" alt="Cohete 3D" />
+        <div class="kicker-line">BENEFICIO 1 · COMPRENSIÓN REAL</div>
+        <h2 class="h-display">
+          No memorices.<br />
+          <span class="hl-blue">Domina cada paso.</span>
+        </h2>
+        <p class="h-lead">
+          Convierte cualquier PDF de tu carrera en tarjetas didácticas interactivas que te enseñan a resolver problemas paso a paso, no a repetir de memoria.
+        </p>
+      </div>
+
+      <div class="s2-cards-wrap">
+        <div class="fc-box fc-front">
+          <div>
+            <div class="fc-meta">FRENTE / CUANDO TE TRABAS EN UN EJERCICIO</div>
+            <div class="fc-question">¿Cuál es el siguiente paso para resolver el problema?</div>
+            <div class="fc-hint">Obliga a tu mente a elegir la fórmula o criterio antes de ver la respuesta.</div>
+          </div>
+          <img class="diecut" src="file://~/.agents/skills/ig-carousel-opendesign/assets/diecut/speech_purple.png" alt="Pregunta 3D" />
+        </div>
+
+        <div class="fc-box fc-back">
+          <div>
+            <div class="fc-meta">REVERSO / SOLUCIÓN EXPLICADA + AHORRO DE TIEMPO</div>
+            <div class="fc-answer">Muestra la regla aplicada, las operaciones intermedias y el resultado validado.</div>
+            <div class="fc-hint">Al terminar, repites únicamente las tarjetas que fallaste y ahorras horas.</div>
+          </div>
+          <img class="diecut" src="file://~/.agents/skills/ig-carousel-opendesign/assets/diecut/thumbs_up.png" alt="Pulgar 3D" />
+        </div>
+      </div>
+
+      <div class="anchor-row">
+        <span class="anchor-text">Repites <span class="blue">solo lo que te cuesta trabajo</span>, no todo el temario.</span>
+        <span class="swipe-cue">SIMULADOR →</span>
+      </div>
+
+      <footer class="micro-footer">
+        <div>
+          <div class="mf-author-name">DANIEL CRUZ · danielcruz.mx/flashcards</div>
+          <div class="mf-author-role">ESTUDIANTES EMBAJADORES DE GOOGLE</div>
+        </div>
+        <div class="mf-progress-wrap">
+          <div class="mf-count">02 / 04</div>
+          <div class="mf-bars">
+            <span class="mf-bar done"></span>
+            <span class="mf-bar active"></span>
+            <span class="mf-bar"></span>
+            <span class="mf-bar"></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 3 (03 / 04) ==================== -->
+  <section class="slide" id="slide-3" data-od-id="c4-slide-03">
+    <div class="top-spectrum"></div>
+    <div class="canvas">
+      <header class="micro-header">
+        <div class="mh-left">
+          <img src="file://~/.agents/skills/ig-carousel-opendesign/assets/google-g.png" alt="Google" />
+          <span class="mh-series">ESTUDIO ACTIVO CON IA</span>
+        </div>
+        <span class="mh-stage">03 / SIMULADOR</span>
+      </header>
+
+      <div class="hero-block">
+        <img class="hero-top-sticker" style="width: 190px; height: 215px; top: -8px; right: 12px;" src="file://~/.agents/skills/ig-carousel-opendesign/assets/diecut/phone_silver.png" alt="Móvil 3D" />
+        <div class="kicker-line">BENEFICIO 2 · CERO SORPRESAS</div>
+        <h2 class="h-display">
+          Equivócate hoy.<br />
+          <span class="hl-green">Acierta en tu final.</span>
+        </h2>
+        <p class="h-lead">
+          Genera un examen de práctica de 10 preguntas basado 100% en tu guía en PDF para descubrir tus puntos débiles antes del día de la prueba.
+        </p>
+      </div>
+
+      <div class="quiz-card">
+        <img class="diecut quiz-floating-sticker" src="file://~/.agents/skills/ig-carousel-opendesign/assets/diecut/star_chrome.png" alt="Estrella 3D" />
+        <div class="quiz-top">
+          <span>SIMULADOR DE EXAMEN / TU PROPIO PDF</span>
+          <span>10 REACTIVOS</span>
+        </div>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill"></div>
+        </div>
+        <div class="quiz-q">
+          ¿Cómo te ayuda un quiz interactivo de Gemini la noche antes de tu examen?
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt">
+            <div class="quiz-opt-left">
+              <span class="quiz-opt-letter">A</span>
+              <span>Solo te da una calificación sin explicarte tus errores</span>
+            </div>
+          </div>
+          <div class="quiz-opt correct">
+            <div class="quiz-opt-left">
+              <span class="quiz-opt-letter">B</span>
+              <span>Te explica cada respuesta y diagnostica qué temas repasar</span>
+            </div>
+            <span class="quiz-opt-status">BENEFICIO</span>
+          </div>
+          <div class="quiz-opt">
+            <div class="quiz-opt-left">
+              <span class="quiz-opt-letter">C</span>
+              <span>Inventa fórmulas externas que no vienen en tu clase</span>
+            </div>
+          </div>
+        </div>
+        <div class="quiz-explain">
+          Al restringir el prompt a tu PDF, entrenas exclusivamente con los conceptos, casos y fórmulas que sí evalúa tu profesor.
+        </div>
+      </div>
+
+      <div class="anchor-row">
+        <span class="anchor-text">Cada error en el simulador <span class="green">es un acierto más en tu examen.</span></span>
+        <span class="swipe-cue">PASO A PASO →</span>
+      </div>
+
+      <footer class="micro-footer">
+        <div>
+          <div class="mf-author-name">DANIEL CRUZ · danielcruz.mx/flashcards</div>
+          <div class="mf-author-role">ESTUDIANTES EMBAJADORES DE GOOGLE</div>
+        </div>
+        <div class="mf-progress-wrap">
+          <div class="mf-count">03 / 04</div>
+          <div class="mf-bars">
+            <span class="mf-bar done"></span>
+            <span class="mf-bar done"></span>
+            <span class="mf-bar active"></span>
+            <span class="mf-bar"></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 4 (04 / 04) ==================== -->
+  <section class="slide" id="slide-4" data-od-id="c4-slide-04">
+    <div class="top-spectrum"></div>
+    <div class="canvas">
+      <header class="micro-header">
+        <div class="mh-left">
+          <img src="file://~/.agents/skills/ig-carousel-opendesign/assets/google-g.png" alt="Google" />
+          <span class="mh-series">ESTUDIO ACTIVO CON IA</span>
+        </div>
+        <span class="mh-stage">04 / PASO A PASO</span>
+      </header>
+
+      <div class="hero-block">
+        <img class="hero-top-sticker" style="width: 205px; height: 205px; top: -6px; right: 8px;" src="file://~/.agents/skills/ig-carousel-opendesign/assets/diecut/gradcap.png" alt="Birrete 3D" />
+        <div class="kicker-line">GUÍA INTERACTIVA Y GENERADOR DE PROMPTS</div>
+        <h2 class="h-display">
+          Pruébalo hoy en<br />
+          <span class="hl-blue">tu propia materia.</span>
+        </h2>
+        <p class="h-lead">
+          Creé una página interactiva con el paso a paso completo para que estudies más rápido, más fácil y comprendiendo mejor.
+        </p>
+      </div>
+
+      <div class="s4-web-card">
+        <div class="s4-url-top">
+          <div>
+            <div class="s4-url-kicker">ENTRA AHORA DESDE TU CELULAR O LAPTOP</div>
+            <div class="s4-url-domain">danielcruz.mx<span class="slash">/flashcards</span></div>
+          </div>
+          <img class="diecut" src="file://~/.agents/skills/ig-carousel-opendesign/assets/diecut/laptop_irid.png" alt="Laptop 3D" />
+        </div>
+
+        <div class="s4-features-list">
+          <div class="s4-feat-row">
+            <span class="s4-feat-num">01</span>
+            <span class="s4-feat-text">Simulador en vivo para voltear tarjetas y responder quizzes de prueba.</span>
+          </div>
+          <div class="s4-feat-row">
+            <span class="s4-feat-num">02</span>
+            <span class="s4-feat-text">Generador interactivo: escribe tu materia y copia tu prompt en 1 clic.</span>
+          </div>
+          <div class="s4-feat-row">
+            <span class="s4-feat-num">03</span>
+            <span class="s4-feat-text">El método paso a paso + el truco del Chat Temporal para nivel avanzado.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="s4-question-card">
+        <div>
+          <div class="s4-q-title">
+            ¿Qué materia quieres aprobar con mejor promedio este semestre?
+          </div>
+          <div class="s4-q-sub">
+            Guarda este post y entra a danielcruz.mx/flashcards
+          </div>
+        </div>
+        <img class="diecut" src="file://~/.agents/skills/ig-carousel-opendesign/assets/diecut/megaphone.png" alt="Megáfono 3D" />
+      </div>
+
+      <footer class="micro-footer">
+        <div>
+          <div class="mf-author-name">DANIEL CRUZ · danielcruz.mx/flashcards</div>
+          <div class="mf-author-role">ESTUDIANTES EMBAJADORES DE GOOGLE</div>
+        </div>
+        <div class="mf-progress-wrap">
+          <div class="mf-count">04 / 04</div>
+          <div class="mf-bars">
+            <span class="mf-bar done"></span>
+            <span class="mf-bar done"></span>
+            <span class="mf-bar done"></span>
+            <span class="mf-bar active"></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const slide = params.get('slide');
+      if (slide) {
+        document.body.classList.add('single-mode');
+        document.querySelectorAll('.slide').forEach((el) => {
+          if (el.id !== 'slide-' + slide) el.style.display = 'none';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

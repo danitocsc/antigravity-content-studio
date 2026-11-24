@@ -1,0 +1,26 @@
+# Archivos de video y audio pesados
+*.mp4
+*.mov
+*.webm
+*.wav
+*.mp3
+*.aac
+
+# Secretos, credenciales y variables de entorno
+.env
+.env.*
+*.pem
+*.key
+*credentials*.json
+*token*.json
+auth-profiles.json
+rclone.conf
+
+# Directorios temporales y caches
+__pycache__/
+*.py[cod]
+node_modules/
+.DS_Store
+tmp/
+scratch/
+*.log

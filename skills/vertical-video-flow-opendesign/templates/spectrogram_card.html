@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Análisis de Espectrograma y Corte de Silencios en Uniones</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-style: normal !important;
+  }
+  body {
+    width: 1280px;
+    background: #F8FAFC;
+    color: #0F172A;
+    font-family: 'Inter', sans-serif;
+    padding: 36px 40px 40px;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 18px;
+    margin-bottom: 24px;
+    border-bottom: 3.5px solid #0F172A;
+  }
+  .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 800;
+    color: #1A73E8;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .title {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -1.4px;
+    color: #0F172A;
+  }
+  .meta-right {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 800;
+    color: #0F172A;
+    text-align: right;
+  }
+  .panel {
+    background: #FFFFFF;
+    border: 3px solid #0F172A;
+    box-shadow: 7px 7px 0px #0F172A;
+    padding: 22px 24px;
+    margin-bottom: 24px;
+  }
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #E2E8F0;
+  }
+  .panel-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -0.6px;
+  }
+  .panel-stat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 800;
+  }
+  .track-wrap {
+    position: relative;
+    width: 1152px;
+    border: 2px solid #0F172A;
+    background: #FFFFFF;
+    overflow: hidden;
+  }
+  .wave-box {
+    position: relative;
+    width: 1152px;
+    height: 120px;
+    background: #F8FAFC;
+    border-bottom: 2px solid #0F172A;
+  }
+  .wave-box img {
+    width: 1152px;
+    height: 120px;
+    display: block;
+  }
+  .spec-box {
+    position: relative;
+    width: 1152px;
+    height: 170px;
+    background: #0F172A;
+  }
+  .spec-box img {
+    width: 1152px;
+    height: 170px;
+    display: block;
+  }
+  /* Silence Cut Zones Overlay on BEFORE track (total 30.10s) */
+  .cut-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: rgba(234, 67, 53, 0.28);
+    border-left: 2.5px dashed #EA4335;
+    border-right: 2.5px dashed #EA4335;
+    z-index: 10;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 6px;
+  }
+  .cut-label {
+    background: #FFFFFF;
+    border: 2px solid #EA4335;
+    color: #B91C1C;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 5px;
+    white-space: nowrap;
+  }
+  .join-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-left: 3px solid #137333;
+    z-index: 10;
+  }
+  .join-label {
+    position: absolute;
+    top: 6px;
+    transform: translateX(-50%);
+    background: #FFFFFF;
+    border: 2px solid #137333;
+    color: #137333;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 6px;
+    white-space: nowrap;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .sum-item {
+    background: #F8FAFC;
+    border: 2px solid #CBD5E1;
+    padding: 10px 12px;
+  }
+  .sum-k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    color: #475569;
+    margin-bottom: 3px;
+  }
+  .sum-v {
+    font-size: 16px;
+    font-weight: 900;
+    color: #0F172A;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="kicker">AUDITORÍA DE AUDIO · ESPECTROGRAMA Y FORMA DE ONDA (UMBRAL -37 dBFS)</div>
+      <div class="title">Eliminación de silencios muertos en las uniones de clips</div>
+    </div>
+    <div class="meta-right">30.10 s -> 23.51 s (-6.59 s DE SILENCIO)</div>
+  </div>
+
+  <!-- ANTES -->
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">ANTES (30.10 s): 5 silencios muertos detectados en inicios, uniones y cierre</div>
+      <div class="panel-stat" style="color:#B91C1C;">6.59 s EN SILENCIO (ACTOR CALLADO EN CÁMARA)</div>
+    </div>
+    <div class="track-wrap">
+      <div class="wave-box">
+        <img src="/tmp/flow_research/wave_before_raw.png">
+      </div>
+      <div class="spec-box">
+        <img src="/tmp/flow_research/spec_before_raw.png">
+      </div>
+      <!-- 1. 0.00-0.85s (0% to 2.82%) -->
+      <div class="cut-zone" style="left:0%;width:2.82%;"><span class="cut-label">0.85s</span></div>
+      <!-- 2. 8.62-10.05s Join Clip 1->2 (28.63% to 33.39%) -->
+      <div class="cut-zone" style="left:28.63%;width:4.76%;"><span class="cut-label">UNIÓN 1->2 (-1.43s)</span></div>
+      <!-- 3. 18.61-19.25s Pause before Carbon (61.82% to 63.95%) -->
+      <div class="cut-zone" style="left:61.82%;width:2.13%;"><span class="cut-label">-0.64s</span></div>
+      <!-- 4. 19.81-21.08s Join Clip 2->3 (65.81% to 70.03%) -->
+      <div class="cut-zone" style="left:65.81%;width:4.22%;"><span class="cut-label">UNIÓN 2->3 (-1.27s)</span></div>
+      <!-- 5. 27.71-30.10s Trailing tail Clip 3 (92.05% to 100%) -->
+      <div class="cut-zone" style="left:92.05%;width:7.95%;"><span class="cut-label">COLA FINAL (-2.39s)</span></div>
+    </div>
+    <div class="summary-grid">
+      <div class="sum-item">
+        <div class="sum-k">INICIO CLIP 1 (0.00s - 0.85s)</div>
+        <div class="sum-v">Recortado (-0.85 s)</div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-k">UNIÓN CLIP 1 -> CLIP 2</div>
+        <div class="sum-v">Recortado (-1.43 s)</div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-k">UNIÓN CLIP 2 -> CLIP 3</div>
+        <div class="sum-v">Recortado (-1.91 s total)</div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-k">COLA FINAL CLIP 3</div>
+        <div class="sum-v">Recortado (-2.39 s)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESPUÉS -->
+  <div class="panel" style="margin-bottom:0;">
+    <div class="panel-head">
+      <div class="panel-title">DESPUÉS (23.51 s): Flujo continuo de voz con micro-fundido (afade 50 ms) entre cortes</div>
+      <div class="panel-stat" style="color:#137333;">100% HABLA ACTIVA · CERO PAUSAS ANORMALES</div>
+    </div>
+    <div class="track-wrap">
+      <div class="wave-box">
+        <img src="/tmp/flow_research/wave_after_raw.png">
+      </div>
+      <div class="spec-box">
+        <img src="/tmp/flow_research/spec_after_raw.png">
+      </div>
+      <!-- Clean join 1->2 at 7.77s / 23.51s = 33.05% -->
+      <div class="join-line" style="left:33.05%;"><span class="join-label">CORTE LIMPIO 1->2 (7.77s)</span></div>
+      <!-- Clean join 2->3 at 16.89s / 23.51s = 71.84% -->
+      <div class="join-line" style="left:71.84%;"><span class="join-label">CORTE LIMPIO 2->3 (16.89s)</span></div>
+    </div>
+  </div>
+</body>
+</html>
