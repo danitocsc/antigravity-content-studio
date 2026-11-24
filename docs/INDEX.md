@@ -9,8 +9,9 @@ Este índice organiza toda la metodología, skills, scripts, plantillas y diagra
 | Documento | Audiencia | Propósito |
 | :--- | :--- | :--- |
 | [README.md](../README.md) | Humano y Agente IA | Guía maestra del repositorio, prompt de configuración automática para el agente, inventario completo de herramientas y diagramas de flujo generales. |
-| [AGENT_SETUP.md](../AGENT_SETUP.md) | Agente IA (Antigravity) | Runbook paso a paso para que el agente instale las skills, el plugin `antigravity-flow`, valide dependencias y configure el entorno sin intervención manual compleja. |
-| [install.sh](../install.sh) | Humano y Agente IA | Instalador ejecutable de un solo comando que copia las 4 skills a `~/.agents/skills/` y el plugin a `~/.gemini/config/plugins/`. |
+| [AGENT_SETUP.md](../AGENT_SETUP.md) | Agente IA (Antigravity) | Runbook paso a paso para que el agente instale las skills, el plugin `antigravity-flow`, OpenMotion Studio + MCP, valide dependencias y configure el entorno sin intervención manual compleja. |
+| [REQUIREMENTS.md](../REQUIREMENTS.md) | Humano y Agente IA | Lista detallada de requerimientos del sistema (`Node >= 22.18`, `ffmpeg`, `Python 3`, `faster-whisper`), instalación de `nexu-io/openmotion` (`@openmotion/app@0.2.1`) y configuración de `mcp_config.json`. |
+| [install.sh](../install.sh) / [install.ps1](../install.ps1) | Humano y Agente IA | Instaladores ejecutables (Linux/macOS y Windows PowerShell) que copian las skills, el plugin y lanzan `@openmotion/app`. |
 | [rules/AGENTS_CONTENT_RULES.md](../rules/AGENTS_CONTENT_RULES.md) | Agente IA | Reglas globales para `AGENTS.md`: Modo Claro obligatorio (`#FFFFFF`), cero badges, cero guiones largos y pausa obligatoria con muestras antes de renderizar. |
 
 ---

@@ -38,8 +38,22 @@ for bin in git python3 ffmpeg ffprobe node npx; do
   fi
 done
 
-python3 -c "import PIL; print('[OK] Python Pillow (PIL) disponible')" 2>/dev/null || echo "[OPCIONAL] Instala Pillow con: pip3 install Pillow"
-python3 -c "import faster_whisper; print('[OK] Python faster-whisper disponible')" 2>/dev/null || echo "[OPCIONAL] Instala faster-whisper con: pip3 install faster-whisper"
+python3 -c "import PIL; print('[OK] Python Pillow (PIL) disponible')" 2>/dev/null || echo "[FALTA] Instala Pillow con: pip3 install Pillow"
+python3 -c "import faster_whisper; print('[OK] Python faster-whisper disponible')" 2>/dev/null || echo "[FALTA] Instala faster-whisper con: pip3 install faster-whisper"
 
 echo ""
-echo "Instalación completada. Revisa AGENT_SETUP.md y README.md para comenzar."
+echo "------------------------------------------------------------------"
+echo " Instalación de OpenMotion Studio + MCP (@openmotion/app@0.2.1)"
+echo "------------------------------------------------------------------"
+if [ "${INSTALL_OPENMOTION:-1}" = "1" ] && command -v npx >/dev/null 2>&1; then
+  echo "Ejecutando @openmotion/app@0.2.1 setup --host antigravity..."
+  npx --yes @openmotion/app@0.2.1 setup \
+    --host antigravity \
+    --skills-dir "$SKILLS_DEST" \
+    --data-dir "${HOME}/openmotion-data" || echo "[AVISO] Revisa REQUIREMENTS.md para completar el registro MCP de OpenMotion."
+else
+  echo "Omitido (ejecuta manualmente: npx --yes @openmotion/app@0.2.1 setup --host antigravity --skills-dir ~/.agents/skills --data-dir ~/openmotion-data)"
+fi
+
+echo ""
+echo "Instalación completada. Revisa REQUIREMENTS.md, AGENT_SETUP.md y README.md para comenzar."

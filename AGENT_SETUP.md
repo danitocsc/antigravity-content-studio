@@ -29,17 +29,29 @@ bash /tmp/antigravity-content-studio/install.sh
 
 Esto copiará las 4 skills a `~/.agents/skills/` y el plugin `antigravity-flow` a `~/.gemini/config/plugins/antigravity-flow`.
 
-### Paso 2: Verificar e instalar dependencias faltantes
-Verifica que el entorno del usuario cuente con las herramientas necesarias:
+### Paso 2: Instalar OpenMotion Studio + MCP (`nexu-io/openmotion`) y Dependencias
+Consulta la matriz completa en [`REQUIREMENTS.md`](./REQUIREMENTS.md). Verifica e instala:
 
-1. **FFmpeg y FFprobe** (indispensables para extracción de últimos fotogramas, espectrogramas `showspectrumpic`, recorte de silencios con `afade` y montaje a `1080 × 1920 px`):
+1. **OpenMotion Studio + MCP (`@openmotion/app@0.2.1`, requiere Node.js `>= 22.18`):**
+   - En Linux/macOS:
+     ```bash
+     npx --yes @openmotion/app@0.2.1 setup --host antigravity --skills-dir ~/.agents/skills --data-dir ~/openmotion-data
+     ```
+   - En Windows (PowerShell):
+     ```powershell
+     .\install.ps1
+     npx --yes @openmotion/app@0.2.1 setup --host antigravity --skills-dir "$HOME\.agents\skills" --data-dir "$HOME\openmotion-data"
+     ```
+   - Toma el objeto `agentRegistration` impreso al final y agrégalo a `~/.gemini/config/mcp_config.json` (preservando servidores MCP existentes) para habilitar las 34 herramientas de **OpenMotion MCP** (`openmotion_list_templates`, `openmotion_create_project`, `openmotion_edit_project`, `openmotion_export_request`) y sus 8 skills (`openmotion-recreate`, `openmotion-director`, `openmotion-template-to-video`, `openmotion-production`, etc.).
+2. **FFmpeg y FFprobe** (indispensables para extracción de últimos fotogramas, espectrogramas `showspectrumpic`, recorte de silencios con `afade` y montaje a `1080 × 1920 px`):
    - Linux (Ubuntu/Debian): `sudo apt-get update && sudo apt-get install -y ffmpeg`
    - macOS: `brew install ffmpeg`
-2. **Python 3 + Pillow + faster-whisper**:
+   - Windows: `winget install Gyan.FFmpeg`
+3. **Python 3 + Pillow + faster-whisper + requests**:
    ```bash
    pip3 install Pillow faster-whisper requests
    ```
-3. **Node.js + Playwright / agent-browser** (para renderizar las plantillas HTML/CSS de carruseles y las capas transparentes de motion graphics a `1080 × 1920 px`):
+4. **Node.js + Playwright / agent-browser** (para renderizar las plantillas HTML/CSS de carruseles y las capas transparentes de motion graphics a `1080 × 1920 px`):
    ```bash
    npm install -g agent-browser playwright-core
    npx playwright install chromium

@@ -14,7 +14,7 @@ Repositorio completo de **skills, plugins, plantillas HTML/CSS, scripts de audit
 ### 🤖 Prompt listo para copiar y pegar a tu Agente de Antigravity
 
 ```text
-Clona y configura en mi entorno el repositorio https://github.com/danitocsc/antigravity-content-studio siguiendo todas las instrucciones de AGENT_SETUP.md. Ejecuta install.sh para instalar las skills en ~/.agents/skills/ y el plugin antigravity-flow en ~/.gemini/config/plugins/, verifica que tenga instaladas las dependencias (ffmpeg, python3, Pillow, faster-whisper, node y playwright/agent-browser), integra las reglas de rules/AGENTS_CONTENT_RULES.md y confírmame cuando todo esté listo para empezar a crear carruseles y videos verticales.
+Clona y configura en mi entorno el repositorio https://github.com/danitocsc/antigravity-content-studio siguiendo todas las instrucciones de AGENT_SETUP.md y REQUIREMENTS.md. Ejecuta install.sh (o install.ps1 en Windows) para instalar las skills en ~/.agents/skills/ y el plugin antigravity-flow en ~/.gemini/config/plugins/, instala OpenMotion Studio + MCP (@openmotion/app@0.2.1) y registra el servidor MCP openmotion en ~/.gemini/config/mcp_config.json, verifica todas las dependencias (Node >= 22.18, ffmpeg, python3, Pillow, faster-whisper y playwright/agent-browser), integra las reglas de rules/AGENTS_CONTENT_RULES.md y confírmame cuando todo esté listo para empezar a crear carruseles y videos verticales.
 ```
 
 ---
@@ -22,7 +22,7 @@ Clona y configura en mi entorno el repositorio https://github.com/danitocsc/anti
 ## 📑 Índice General
 
 1. [Cómo usar este repositorio (Para la Persona y para el Agente de IA)](#-1-cómo-usar-este-repositorio-para-la-persona-y-para-el-agente-de-ia)
-2. [Todo lo que se utiliza (Inventario Completo del Stack)](#-2-todo-lo-que-se-utiliza-inventario-completo-del-stack)
+2. [Todo lo que se utiliza y Requerimientos (`REQUIREMENTS.md`)](#-2-todo-lo-que-se-utiliza-inventario-completo-del-stack)
 3. [Diagrama de Flujo General del Sistema](#-3-diagrama-de-flujo-general-del-sistema)
 4. [Flujo 1: Carruseles de Instagram 4:5 (OpenDesign UI + Fotos Stock + Stickers 3D)](#-4-flujo-1-carruseles-de-instagram-45-opendesign-ui--fotos-stock--stickers-3d)
 5. [Flujo 2: Videos Verticales 9:16 (Google Flow Avatar + Espectrograma + Safe Margins + Motion Graphics)](#-5-flujo-2-videos-verticales-916-google-flow-avatar--espectrograma--safe-margins--motion-graphics)
@@ -71,7 +71,10 @@ Este repositorio está diseñado con **doble especificación**: explica con clar
 | **`FFmpeg` + `FFprobe`** | Motor Multimedia CLI | `ffmpeg` / `ffprobe` | Extrae el último fotograma (`-sseof -0.15`), genera espectrogramas (`showspectrumpic`) y ondas (`showwavespic`), recorta silencios con `afade` y escala a `1080 × 1920 px` (`lanczos`). |
 | **`Playwright` / `agent-browser`** | Renderizador Chromium Headless | `npx playwright` / `agent-browser` | Renderiza las láminas de carrusel (`1080 × 1350 px`) y los keyframes transparentes (`omitBackground: true`) de motion graphics (`1080 × 1920 px`). |
 | **`Pillow (PIL)`** | Librería Python de Imagen | `pip3 install Pillow` | Genera stickers 3D troquelados (`make_diecut.py`) y analiza el brillo/contraste de fotografías stock (`fetch_stock.py`). |
+| **OpenMotion Studio + MCP (`nexu-io/openmotion`)** | Estudio de Video + 34 Herramientas MCP + 8 Skills | [`REQUIREMENTS.md`](./REQUIREMENTS.md) (`@openmotion/app@0.2.1`) | Catálogo con **300+ recetas `Motion.md`**, plantilla `presenter-tech`, Studio web local (`localhost:4173`) y clonación de efectos desde cualquier TikTok/Reel de referencia (`openmotion-recreate`). |
 | **Repositorios de Motion de OpenDesign** | Referencias de Diseño Cinético | Integrados en las plantillas de `skills/vertical-video-flow-opendesign/templates/` | Patrones tomados de `heygen-com/hyperframes` (tipografía `54-88px`, `Sketchout`, `Marker Sweep`), `alchaincyf/huashu-art-motion` (*"Una pantalla, una sola cosa"*), `yangxu128/Motion.Lab` (`slam`) y `remotion-dev/remotion`. |
+
+> Consulta la lista completa de versiones mínimas, configuración MCP (Linux, macOS y Windows) y variables opcionales en **[`REQUIREMENTS.md`](./REQUIREMENTS.md)**.
 
 ---
 
@@ -182,7 +185,9 @@ flowchart LR
 antigravity-content-studio/
 ├── README.md                                   # Esta guía principal (humana + agente IA)
 ├── AGENT_SETUP.md                              # Instrucciones ejecutables para que el agente configure todo
-├── install.sh                                  # Instalador automático de skills y plugins
+├── REQUIREMENTS.md                             # Matriz completa de dependencias, versiones, OpenMotion MCP y variables
+├── install.sh                                  # Instalador automático para Linux / macOS / WSL (incluye @openmotion/app)
+├── install.ps1                                 # Instalador nativo para Windows (PowerShell)
 ├── rules/
 │   └── AGENTS_CONTENT_RULES.md                 # Reglas globales (Modo Claro #FFFFFF, Cero Badges, Checkpoints)
 ├── docs/
